@@ -4,10 +4,16 @@ const fragment = document.createDocumentFragment();
 let cardNumber = 16;
 // TODO: array of cards
 const cardDeck16 = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'];
-let cardDeck = cardDeck16;
 
 // TODO: function to shufle cards
 function shufle() {
+  let cardDeck = cardDeck16.slice();
+
+  // empty the board
+  if (board.textContent) {
+    board.innerHTML = '';
+  };
+
   // creates cards
   for (let i=0; i<cardNumber; i++) {
     const newCard = document.createElement('li');
