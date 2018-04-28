@@ -1,6 +1,6 @@
 // ** Shuffling board ** //
 
-const board = document.getElementById('board');
+const board = document.querySelector('.board');
 const fragment = document.createDocumentFragment();
 // number of cards created
 let cardNumber = 16;
@@ -25,6 +25,7 @@ function shufle() {
 
     // assign picked card to newly created element
     newCard.innerText = cardDeck[cardPicked];
+    newCard.className = 'card';
     // remove picked card from available list
     cardDeck.splice(cardPicked, 1);
 
@@ -47,7 +48,7 @@ board.addEventListener('click', function clickedCard(e) {
     // check card selected
     cardIsSelected = !cardIsSelected;
 
-    // first card reacts
+    // first & second card reacts
     if (cardIsSelected) {
       card1 = e.target;
     } else {

@@ -1,3 +1,71 @@
+@font-face {
+  font-family: hallowenFont;
+  src: url(../fonts/HallowenInline.otf);
+}
+
+* {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+h1 {
+  text-align: center;
+  font-family: hallowenFont, cursive;
+}
+
+/*** Game layout ***/
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 800px;
+  max-width: 800px;
+  max-height: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stars, .moves, .timer {
+  margin: 0;
+  width: 30%;
+}
+
+.stars li {
+  display: inline-block;
+}
+
+.moves {
+  text-align: center;
+}
+
+.timer {
+  text-align: right;
+}
+
+.board {
+  width: 100%;
+  height: 90%;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  display: inline-flex;
+  width: calc(25% - 82px);
+  height: calc(25% - 10px);
+  margin: 4px 40px;
+  border: 1px solid black;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.restart {
+  display: flex;
+}
+
 .selectedCard {
   background-color: red;
 }

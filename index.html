@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Vaiduoklis Memory Game</title>
   <link rel="stylesheet" href="css/main.css">
 </head>
@@ -18,17 +19,17 @@
     </ul>
 
     <!-- TODO: Move counter -->
-    <p class="move-counter">Moves: 10/10</p>
+    <p class="moves">Moves: 10/10</p>
 
     <!-- TODO: Timer -->
     <p class="timer">Time: 00:00</p>
 
     <!-- TODO: Board -->
-    <ul id="board">
+    <ul class="board">
     </ul>
 
     <!-- TODO: ReStart -->
-    <button onclick="shufle()">Restart</button>
+    <button class="restart" onclick="shufle()">Restart</button>
   </main>
 
   <script src="js/main.js"></script>
