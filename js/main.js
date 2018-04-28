@@ -43,14 +43,20 @@ let card1, card2;
 
 // TODO: what happens when card clicked
 board.addEventListener('click', function clickedCard(e) {
-  if (e.target.nodeName === 'LI') {
+  if (e.target.nodeName === 'LI' && !e.target.classList.contains('pairedCard')) {
     // check card selected
     cardIsSelected = !cardIsSelected;
 
     // first card reacts
     if (cardIsSelected) {
       card1 = e.target;
-      card1.classList.toggle('selectedCard')
+    } else {
+      card2 = e.target;
+      if (card1.textContent === card2.textContent) {
+        card1.classList.toggle('pairedCard');
+        card2.classList.toggle('pairedCard');
+      }
     }
+    card1.classList.toggle('selectedCard');
   }
 });
