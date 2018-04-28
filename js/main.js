@@ -1,3 +1,5 @@
+// ** Shuffling board ** //
+
 const board = document.getElementById('board');
 const fragment = document.createDocumentFragment();
 // number of cards created
@@ -12,7 +14,7 @@ function shufle() {
   // empty the board
   if (board.textContent) {
     board.innerHTML = '';
-  };
+  }
 
   // creates cards
   for (let i=0; i<cardNumber; i++) {
@@ -20,7 +22,6 @@ function shufle() {
 
     // get random card number from array
     let cardPicked = Math.floor(Math.random() * cardDeck.length);
-    console.log(cardPicked);
 
     // assign picked card to newly created element
     newCard.innerText = cardDeck[cardPicked];
@@ -28,9 +29,28 @@ function shufle() {
     cardDeck.splice(cardPicked, 1);
 
     fragment.appendChild(newCard);
-  };
+  }
 
   board.appendChild(fragment);
-};
+}
 
 shufle();
+
+// ** Picking Cards ** //
+
+let cardIsSelected = false;
+let card1, card2;
+
+// TODO: what happens when card clicked
+board.addEventListener('click', function clickedCard(e) {
+  if (e.target.nodeName === 'LI') {
+    // check card selected
+    cardIsSelected = !cardIsSelected;
+
+    // first card reacts
+    if (cardIsSelected) {
+      card1 = e.target;
+      card1.classList.toggle('selectedCard')
+    }
+  }
+});
