@@ -37,6 +37,23 @@ function shufle() {
 
 shufle();
 
+// ** Statistics ** //
+
+// stats variables
+let stars = 3;
+let movesLeft = 20;
+let movesTotal = 20;
+let time = 0;
+
+const movesLeftCounter = document.querySelector('.moves-left');
+const movesTotalCounter = document.querySelector('.moves-total');
+
+// setting stats initial
+
+movesLeftCounter.textContent = movesLeft;
+movesTotalCounter.textContent = movesTotal;
+
+
 // ** Picking Cards ** //
 
 let cardIsSelected = false;
