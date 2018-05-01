@@ -2,7 +2,7 @@
 
 // stats variables
 let stars = 3;
-let movesTotal = 5;
+let movesTotal = 8;
 let movesLeft = movesTotal;
 // number of cards created
 let cardNumber = 16;
@@ -10,6 +10,9 @@ let pairsLeft = 8;
 
 const movesLeftCounter = document.querySelector('.moves-left');
 const movesTotalCounter = document.querySelector('.moves-total');
+const star1 = document.querySelector('.star-1');
+const star2 = document.querySelector('.star-2');
+const star3 = document.querySelector('.star-3');
 
 // setting stats initial
 
@@ -59,6 +62,9 @@ function shufle() {
   movesLeft = movesTotal;
   movesLeftCounter.textContent = movesLeft;
   timeStart = Date.now();
+  star1.textContent = '★';
+  star2.textContent = '★';
+  star3.textContent = '★';
 
   // empty the board
   if (board.textContent) {
@@ -109,12 +115,19 @@ board.addEventListener('click', function clickedCard(e) {
         // Win condition
         if (pairsLeft <= 0) {
           timeCounting();
-          console.log('Win!! ' + timeExact);
+          console.log(`Win!! ${timeExact} Stars:☆★`);
         }
       } else {
         // on mistake removes the move
         --movesLeft
         movesLeftCounter.textContent = movesLeft;
+        if (movesLeft === movesTotal / 4 * 3) {
+          star3.textContent = `☆`;
+        } else if (movesLeft === movesTotal / 2) {
+          star2.textContent = `☆`;
+        } else if (movesLeft === movesTotal / 4) {
+          star1.textContent = `☆`;
+        }
         // Lose condition
         if (movesLeft <= 0) {
           console.log('Lose...');
