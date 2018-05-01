@@ -4,7 +4,6 @@
 let stars = 3;
 let movesLeft = 20;
 let movesTotal = 20;
-let time = 0;
 
 const movesLeftCounter = document.querySelector('.moves-left');
 const movesTotalCounter = document.querySelector('.moves-total');
@@ -13,6 +12,31 @@ const movesTotalCounter = document.querySelector('.moves-total');
 
 movesLeftCounter.textContent = movesLeft;
 movesTotalCounter.textContent = movesTotal;
+
+// timer
+
+let time = 'Time: 00.00';
+let timeStart = Date.now();
+const timeCounter = document.querySelector('.timer');
+
+setInterval(function() {
+  timeInterval = Date.now() - timeStart;
+  timeMin = Math.floor(timeInterval / 60000);
+  timeMin = checkTime(timeMin);
+  timeSec = Math.floor(timeInterval / 1000);
+  timeSec = checkTime(timeSec);
+  time = `Time: ${timeMin}:${timeSec}`;
+  timeCounter.textContent = time;
+}, 500);
+
+// add zero in front of numbers
+function checkTime(i) {
+  if (i < 10) {
+    i = '0' + i;
+  }
+  return i;
+}
+
 
 // ** Shuffling board ** //
 
