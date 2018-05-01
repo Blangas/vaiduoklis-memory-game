@@ -29,7 +29,7 @@ main {
 
 .stars, .moves, .timer {
   margin: 0;
-  width: 30%;
+  width: 27%;
 }
 
 .stars li {

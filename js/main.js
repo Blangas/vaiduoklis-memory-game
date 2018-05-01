@@ -2,8 +2,11 @@
 
 // stats variables
 let stars = 3;
-let movesLeft = 20;
-let movesTotal = 20;
+let movesTotal = 5;
+let movesLeft = movesTotal;
+// number of cards created
+let cardNumber = 16;
+let pairsLeft = 8;
 
 const movesLeftCounter = document.querySelector('.moves-left');
 const movesTotalCounter = document.querySelector('.moves-total');
@@ -16,18 +19,21 @@ movesTotalCounter.textContent = movesTotal;
 // timer
 
 let time = 'Time: 00.00';
-let timeStart = Date.now();
+let timeStart, timeExact;
 const timeCounter = document.querySelector('.timer');
 
-setInterval(function() {
+const timeRefresh = setInterval(timeCounting, 500);
+
+function timeCounting() {
   timeInterval = Date.now() - timeStart;
   timeMin = Math.floor(timeInterval / 60000);
   timeMin = checkTime(timeMin);
-  timeSec = Math.floor(timeInterval / 1000);
+  timeSec = (Math.floor(timeInterval / 1000)) % 60;
   timeSec = checkTime(timeSec);
   time = `Time: ${timeMin}:${timeSec}`;
+  timeExact = time + '.' + (timeInterval % 1000);
   timeCounter.textContent = time;
-}, 500);
+}
 
 // add zero in front of numbers
 function checkTime(i) {
@@ -42,8 +48,6 @@ function checkTime(i) {
 
 const board = document.querySelector('.board');
 const fragment = document.createDocumentFragment();
-// number of cards created
-let cardNumber = 16;
 
 // TODO: array of cards
 const cardDeck16 = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'];
@@ -54,6 +58,7 @@ function shufle() {
   let cardDeck = cardDeck16.slice();
   movesLeft = movesTotal;
   movesLeftCounter.textContent = movesLeft;
+  timeStart = Date.now();
 
   // empty the board
   if (board.textContent) {
@@ -100,12 +105,26 @@ board.addEventListener('click', function clickedCard(e) {
       if (card1.textContent === card2.textContent) {
         card1.classList.toggle('pairedCard');
         card2.classList.toggle('pairedCard');
+        --pairsLeft;
+        // Win condition
+        if (pairsLeft <= 0) {
+          timeCounting();
+          console.log('Win!! ' + timeExact);
+        }
       } else {
         // on mistake removes the move
         --movesLeft
         movesLeftCounter.textContent = movesLeft;
+        // Lose condition
+        if (movesLeft <= 0) {
+          console.log('Lose...');
+        }
       }
     }
     card1.classList.toggle('selectedCard');
   }
 });
+
+// ** Win & Lose conditions ** //
+
+// if all moves spent Lose
