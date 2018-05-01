@@ -74,16 +74,23 @@ function shufle() {
   // creates cards
   for (let i=0; i<cardNumber; i++) {
     const newCard = document.createElement('li');
+    const newCardBack = document.createElement('div');
+    const newCardFront = document.createElement('div');
+
+    newCard.className = 'card';
+    newCardBack.className = 'card-back';
+    newCardFront.className = 'card-front';
 
     // get random card number from array
     let cardPicked = Math.floor(Math.random() * cardDeck.length);
 
     // assign picked card to newly created element
-    newCard.innerText = cardDeck[cardPicked];
-    newCard.className = 'card';
+    newCardFront.innerText = cardDeck[cardPicked];
     // remove picked card from available list
     cardDeck.splice(cardPicked, 1);
 
+    newCard.appendChild(newCardBack);
+    newCard.appendChild(newCardFront);
     fragment.appendChild(newCard);
   }
 
@@ -115,7 +122,7 @@ board.addEventListener('click', function clickedCard(e) {
         // Win condition
         if (pairsLeft <= 0) {
           timeCounting();
-          console.log(`Win!! ${timeExact} Stars:☆★`);
+          console.log(`Win!! ${timeExact} Stars: ${star1.textContent}${star2.textContent}${star3.textContent}`);
         }
       } else {
         // on mistake removes the move
