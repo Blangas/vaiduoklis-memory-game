@@ -2,7 +2,7 @@
 
 // stats variables
 let stars = 3;
-let movesTotal = 8;
+let movesTotal = 16;
 let movesLeft = movesTotal;
 // number of cards created
 let cardNumber = 16;
@@ -106,7 +106,7 @@ let card1, card2;
 
 // TODO: what happens when card clicked
 board.addEventListener('click', function clickedCard(e) {
-  if (e.target.nodeName === 'LI' && !e.target.classList.contains('pairedCard')) {
+  if (e.target.nodeName === 'LI' && !e.target.classList.contains('selectedCard')) {
     // check card selected
     cardIsSelected = !cardIsSelected;
 
@@ -116,8 +116,8 @@ board.addEventListener('click', function clickedCard(e) {
     } else {
       card2 = e.target;
       if (card1.textContent === card2.textContent) {
-        card1.classList.toggle('pairedCard');
-        card2.classList.toggle('pairedCard');
+        card1.classList.toggle('selectedCard');
+        card2.classList.toggle('selectedCard');
         --pairsLeft;
         // Win condition
         if (pairsLeft <= 0) {
