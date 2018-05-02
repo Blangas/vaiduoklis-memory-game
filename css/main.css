@@ -102,7 +102,7 @@ main {
   letter-spacing: inherit;
 }
 
-.modal-win {
+.modal-win, .modal-lose {
   display: block;
   position: fixed;
   left: 0;
@@ -112,9 +112,10 @@ main {
   height: 100%;
   background-color: rgba(255,255,255,0.6);
   text-align: center;
+  font-size: 130%;
 }
 
-.win-content {
+.modal-content {
   display: inline-block;
   width: 60%;
   max-width: 500px;
@@ -152,4 +153,9 @@ main {
 
 footer {
   font-size: 0.7em;
+}
+
+@media screen and (max-width: 400px) {
+  .modal-win, .modal-lose {
+    font-size: 80%;
 }

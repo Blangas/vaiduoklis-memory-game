@@ -14,6 +14,7 @@ const star1 = document.querySelector('.star-1');
 const star2 = document.querySelector('.star-2');
 const star3 = document.querySelector('.star-3');
 const modalWin = document.querySelector('.modal-win');
+const modalLose = document.querySelector('.modal-lose');
 const timeRating = document.querySelector('.time-rating');
 const starRating = document.querySelector('.star-rating');
 const cls = document.querySelector('.close');
@@ -74,6 +75,7 @@ function shufle() {
   // empty the board
   board.innerHTML = '';
   modalWin.style.display = 'none';
+  modalLose.style.display = 'none';
 
   // creates cards
   for (let i=0; i<cardNumber; i++) {
@@ -150,6 +152,7 @@ board.addEventListener('click', function clickedCard(e) {
         }
         // Lose condition
         if (movesLeft <= 0) {
+          modalLose.style.display = 'block';
           console.log('Lose...');
         }
       }
