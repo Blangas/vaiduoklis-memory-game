@@ -101,24 +101,25 @@ shufle();
 
 // ** Picking Cards ** //
 
-let cardIsSelected = false;
+let card1IsSelected = false;
+let card2IsSelected = false;
 let card1, card2;
 
 // TODO: what happens when card clicked
 board.addEventListener('click', function clickedCard(e) {
   if (e.target.nodeName === 'LI' && !e.target.classList.contains('selectedCard')) {
-    // check card selected
-    cardIsSelected = !cardIsSelected;
 
     // first & second card reacts
-    if (cardIsSelected) {
+    if (!card1) {
       card1 = e.target;
-    } else {
+      card1.classList.toggle('selectedCard');
+    } else if (!card2){
       card2 = e.target;
+      card2.classList.toggle('selectedCard');
       if (card1.textContent === card2.textContent) {
-        card1.classList.toggle('selectedCard');
-        card2.classList.toggle('selectedCard');
         --pairsLeft;
+        card1 = undefined;
+        card2 = undefined;
         // Win condition
         if (pairsLeft <= 0) {
           timeCounting();
@@ -126,6 +127,12 @@ board.addEventListener('click', function clickedCard(e) {
         }
       } else {
         // on mistake removes the move
+        setTimeout(function() {
+          card1.classList.toggle('selectedCard');
+          card2.classList.toggle('selectedCard');
+          card1 = undefined;
+          card2 = undefined;
+        },600);
         --movesLeft
         movesLeftCounter.textContent = movesLeft;
         if (movesLeft === movesTotal / 4 * 3) {
@@ -141,7 +148,6 @@ board.addEventListener('click', function clickedCard(e) {
         }
       }
     }
-    card1.classList.toggle('selectedCard');
   }
 });
 

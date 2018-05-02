@@ -90,3 +90,7 @@ main {
 .restart {
   display: flex;
 }
+
+footer {
+  font-size: 0.7em;
+}
