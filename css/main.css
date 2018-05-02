@@ -31,7 +31,10 @@ main {
   margin-right: auto;
 }
 
-.stars, .moves, .timer {
+/* Statistics */
+.stars,
+.moves,
+.timer {
   margin: 0;
   width: 30%;
 }
@@ -52,6 +55,7 @@ main {
   text-align: right;
 }
 
+/* Board with Cards */
 .board {
   width: 100%;
   height: 90%;
@@ -68,6 +72,7 @@ main {
   border: 1px solid black;
   border-radius: 5px;
   padding: 0;
+  background-color: white;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
@@ -91,6 +96,7 @@ main {
   background-color: green;
 }
 
+/* Restart button */
 .restart {
   display: flex;
   border: 1px solid black;
@@ -102,7 +108,9 @@ main {
   letter-spacing: inherit;
 }
 
-.modal-win, .modal-lose {
+/* Modals */
+.modal-win,
+.modal-lose {
   display: block;
   position: fixed;
   left: 0;
@@ -151,11 +159,13 @@ main {
   cursor: pointer;
 }
 
+/* Footer */
 footer {
   font-size: 0.7em;
 }
 
-@media screen and (max-width: 400px) {
+/* Fix for small screens */
+@media screen and (max-width: 420px) {
   .modal-win, .modal-lose {
     font-size: 80%;
 }

@@ -1,12 +1,10 @@
 // ** Statistics ** //
 
 // stats variables
-let stars = 3;
-let movesTotal = 16;
-let movesLeft = movesTotal;
-// number of cards created
-let cardNumber = 16;
-let pairsLeft = 8;
+let movesTotal = 16; // total moves player can do mistake
+let movesLeft = movesTotal; // moves left for mistakes
+let cardNumber = 16; // number of cards created
+let pairsLeft = 8; // number of card pairs
 
 const movesLeftCounter = document.querySelector('.moves-left');
 const movesTotalCounter = document.querySelector('.moves-total');
@@ -21,33 +19,29 @@ const cls = document.querySelector('.close');
 
 // setting stats initial
 
-movesLeftCounter.textContent = movesLeft;
-movesTotalCounter.textContent = movesTotal;
+movesLeftCounter.textContent = movesLeft; // moves left updated in page
+movesTotalCounter.textContent = movesTotal; // moves total updated in page
 
 // timer
 
 let time = 'Time: 00.00';
-let timeStart, timeExact;
+let timeStart, timeExact, timeRefresh;
 const timeCounter = document.querySelector('.timer');
-
-let timeRefresh;
 
 function timeCounting() {
   timeInterval = Date.now() - timeStart;
-  timeMin = Math.floor(timeInterval / 60000);
+  timeMin = Math.floor(timeInterval / 60000); // minutes for timer
   timeMin = checkTime(timeMin);
-  timeSec = (Math.floor(timeInterval / 1000)) % 60;
+  timeSec = (Math.floor(timeInterval / 1000)) % 60; // seconds for timer
   timeSec = checkTime(timeSec);
   time = `Time: ${timeMin}:${timeSec}`;
-  timeExact = time + '.' + (timeInterval % 1000);
-  timeCounter.textContent = time;
+  timeExact = time + '.' + (timeInterval % 1000); // exact time for finished game
+  timeCounter.textContent = time; // update timer
 }
 
 // add zero in front of numbers
 function checkTime(i) {
-  if (i < 10) {
-    i = '0' + i;
-  }
+  if (i < 10) {i = '0' + i;}
   return i;
 }
 
@@ -58,25 +52,41 @@ const board = document.querySelector('.board');
 const fragment = document.createDocumentFragment();
 
 // TODO: array of cards
-const cardDeck16 = ['flaticon-dead', 'flaticon-dead', 'flaticon-halloween-1', 'flaticon-halloween-1', 'flaticon-horror-1', 'flaticon-horror-1', 'flaticon-people', 'flaticon-people', 'flaticon-horror', 'flaticon-horror', 'flaticon-halloween', 'flaticon-halloween', 'flaticon-spiritual', 'flaticon-spiritual', 'flaticon-shapes', 'flaticon-shapes'];
+const cardDeck16 = [
+  'flaticon-dead',
+  'flaticon-dead',
+  'flaticon-halloween-1',
+  'flaticon-halloween-1',
+  'flaticon-horror-1',
+  'flaticon-horror-1',
+  'flaticon-people',
+  'flaticon-people',
+  'flaticon-horror',
+  'flaticon-horror',
+  'flaticon-halloween',
+  'flaticon-halloween',
+  'flaticon-spiritual',
+  'flaticon-spiritual',
+  'flaticon-shapes',
+  'flaticon-shapes'
+];
 
 // TODO: function to shufle cards
 function shufle() {
-  timeRefresh = setInterval(timeCounting, 500);
   // resets variables
-  let cardDeck = cardDeck16.slice();
-  movesLeft = movesTotal;
-  movesLeftCounter.textContent = movesLeft;
-  pairsLeft = cardDeck.length / 2;
-  timeStart = Date.now();
-  star1.textContent = '★';
+  timeRefresh = setInterval(timeCounting, 500); // set time intervals for refreshing timer
+  let cardDeck = cardDeck16.slice(); // create clone deck from which take out cards
+  movesLeft = movesTotal; // reset mistake moves left to player
+  movesLeftCounter.textContent = movesLeft; // update mistake moves left in page
+  pairsLeft = cardDeck.length / 2; // reset card pairs left till win
+  timeStart = Date.now(); // reset time start point to count game time
+  star1.textContent = '★'; // reset star rating displayed
   star2.textContent = '★';
   star3.textContent = '★';
 
-  // empty the board
-  board.innerHTML = '';
-  modalWin.style.display = 'none';
-  modalLose.style.display = 'none';
+  board.innerHTML = ''; // empty the board
+  modalWin.style.display = 'none'; // hide win modal
+  modalLose.style.display = 'none'; // hide lose modal
 
   // creates cards
   for (let i=0; i<cardNumber; i++) {
@@ -116,53 +126,53 @@ board.addEventListener('click', function clickedCard(e) {
   if (e.target.nodeName === 'LI' && !e.target.classList.contains('selectedCard')) {
 
     // first & second card reacts
-    if (!card1) {
-      card1 = e.target;
+    if (!card1) { // if first card not selected
+      card1 = e.target; // select first card
       card1.classList.toggle('selectedCard');
-    } else if (!card2){
-      card2 = e.target;
+    } else if (!card2){ //if second card not selected
+      card2 = e.target; //select second card
       card2.classList.toggle('selectedCard');
-      if (card1.innerHTML === card2.innerHTML) {
-        --pairsLeft;
-        card1 = undefined;
-        card2 = undefined;
+      if (card1.innerHTML === card2.innerHTML) { // if both selected cards match
+        --pairsLeft; // card pairs left -1
+        card1 = undefined; // unselect cards
+        card2 = undefined; // but cards keep selectedCard class and stay open
         // Win condition
         if (pairsLeft <= 0) {
-          timeCounting();
-          clearInterval(timeRefresh);
-          timeRating.textContent = timeExact;
-          starRating.textContent = `${star1.textContent}${star2.textContent}${star3.textContent} ${movesLeft}/${movesTotal}`;
-          modalWin.style.display = 'block';
-          console.log(`Win!! ${timeExact} Stars: ${star1.textContent}${star2.textContent}${star3.textContent}`);
+          timeCounting(); // recount time
+          clearInterval(timeRefresh); // stop time counter
+          timeRating.textContent = timeExact; // exact time for win modal
+          starRating.textContent = `${star1.textContent}${star2.textContent}${star3.textContent} ${movesLeft}/${movesTotal}`; // star/moves rating for win modal
+          modalWin.style.display = 'block'; // display win modal
+          console.log(`Win!! ${timeExact} Stars: ${star1.textContent}${star2.textContent}${star3.textContent}`); // for test purpose
         }
-      } else {
-        // on mistake removes the move
-        setTimeout(function() {
+      } else { // if both selected do not match
+        setTimeout(function() { // after delay close both cards and unselects it
           card1.classList.toggle('selectedCard');
           card2.classList.toggle('selectedCard');
           card1 = undefined;
           card2 = undefined;
         },600);
-        --movesLeft
-        movesLeftCounter.textContent = movesLeft;
-        if (movesLeft === movesTotal / 4 * 3) {
+        --movesLeft // removes the move
+        movesLeftCounter.textContent = movesLeft; // counts star rating
+        if (movesLeft === movesTotal / 4 * 3) { // at 3/4 ★★☆
           star3.textContent = `☆`;
-        } else if (movesLeft === movesTotal / 2) {
+        } else if (movesLeft === movesTotal / 2) { // at 2/4 ★☆☆
           star2.textContent = `☆`;
-        } else if (movesLeft === movesTotal / 4) {
+        } else if (movesLeft === movesTotal / 4) { // at 1/4 ☆☆☆
           star1.textContent = `☆`;
         }
         // Lose condition
         if (movesLeft <= 0) {
-          clearInterval(timeRefresh);
-          modalLose.style.display = 'block';
-          console.log('Lose...');
+          clearInterval(timeRefresh); // stop time counter
+          modalLose.style.display = 'block'; // display lose modal
+          console.log('Lose...'); // test purpose
         }
       }
     }
   }
 });
 
+// reshufle in which case close modals as well
 cls.onclick = function() {
   shufle();
 }
