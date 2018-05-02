@@ -28,6 +28,15 @@
   font-style: normal;
 }
 
+@media screen and (max-width: 400px) {
+  [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+  [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-family: Flaticon;
+    font-size: 40px;
+    font-style: normal;
+  }
+}
+
 .flaticon-dead:before { content: "\f100"; }
 .flaticon-halloween-1:before { content: "\f101"; }
 .flaticon-horror-1:before { content: "\f102"; }

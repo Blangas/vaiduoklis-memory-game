@@ -13,6 +13,10 @@ const movesTotalCounter = document.querySelector('.moves-total');
 const star1 = document.querySelector('.star-1');
 const star2 = document.querySelector('.star-2');
 const star3 = document.querySelector('.star-3');
+const modalWin = document.querySelector('.modal-win');
+const timeRating = document.querySelector('.time-rating');
+const starRating = document.querySelector('.star-rating');
+const cls = document.querySelector('.close');
 
 // setting stats initial
 
@@ -61,15 +65,15 @@ function shufle() {
   let cardDeck = cardDeck16.slice();
   movesLeft = movesTotal;
   movesLeftCounter.textContent = movesLeft;
+  pairsLeft = cardDeck.length / 2;
   timeStart = Date.now();
   star1.textContent = '★';
   star2.textContent = '★';
   star3.textContent = '★';
 
   // empty the board
-  if (board.textContent) {
-    board.innerHTML = '';
-  }
+  board.innerHTML = '';
+  modalWin.style.display = 'none';
 
   // creates cards
   for (let i=0; i<cardNumber; i++) {
@@ -102,8 +106,6 @@ shufle();
 
 // ** Picking Cards ** //
 
-let card1IsSelected = false;
-let card2IsSelected = false;
 let card1, card2;
 
 // TODO: what happens when card clicked
@@ -124,6 +126,9 @@ board.addEventListener('click', function clickedCard(e) {
         // Win condition
         if (pairsLeft <= 0) {
           timeCounting();
+          timeRating.textContent = timeExact;
+          starRating.textContent = `${star1.textContent}${star2.textContent}${star3.textContent} ${movesLeft}/${movesTotal}`;
+          modalWin.style.display = 'block';
           console.log(`Win!! ${timeExact} Stars: ${star1.textContent}${star2.textContent}${star3.textContent}`);
         }
       } else {
@@ -152,6 +157,12 @@ board.addEventListener('click', function clickedCard(e) {
   }
 });
 
-// ** Win & Lose conditions ** //
+cls.onclick = function() {
+  shufle();
+}
 
-// if all moves spent Lose
+window.onclick = function(e) {
+  if (e.target == modalWin) {
+    shufle();
+  }
+}
