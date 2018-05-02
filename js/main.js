@@ -30,7 +30,7 @@ let time = 'Time: 00.00';
 let timeStart, timeExact;
 const timeCounter = document.querySelector('.timer');
 
-const timeRefresh = setInterval(timeCounting, 500);
+let timeRefresh;
 
 function timeCounting() {
   timeInterval = Date.now() - timeStart;
@@ -62,6 +62,7 @@ const cardDeck16 = ['flaticon-dead', 'flaticon-dead', 'flaticon-halloween-1', 'f
 
 // TODO: function to shufle cards
 function shufle() {
+  timeRefresh = setInterval(timeCounting, 500);
   // resets variables
   let cardDeck = cardDeck16.slice();
   movesLeft = movesTotal;
@@ -128,6 +129,7 @@ board.addEventListener('click', function clickedCard(e) {
         // Win condition
         if (pairsLeft <= 0) {
           timeCounting();
+          clearInterval(timeRefresh);
           timeRating.textContent = timeExact;
           starRating.textContent = `${star1.textContent}${star2.textContent}${star3.textContent} ${movesLeft}/${movesTotal}`;
           modalWin.style.display = 'block';
@@ -152,6 +154,7 @@ board.addEventListener('click', function clickedCard(e) {
         }
         // Lose condition
         if (movesLeft <= 0) {
+          clearInterval(timeRefresh);
           modalLose.style.display = 'block';
           console.log('Lose...');
         }
