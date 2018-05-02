@@ -53,7 +53,7 @@ const board = document.querySelector('.board');
 const fragment = document.createDocumentFragment();
 
 // TODO: array of cards
-const cardDeck16 = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'];
+const cardDeck16 = ['flaticon-dead', 'flaticon-dead', 'flaticon-halloween-1', 'flaticon-halloween-1', 'flaticon-horror-1', 'flaticon-horror-1', 'flaticon-people', 'flaticon-people', 'flaticon-horror', 'flaticon-horror', 'flaticon-halloween', 'flaticon-halloween', 'flaticon-spiritual', 'flaticon-spiritual', 'flaticon-shapes', 'flaticon-shapes'];
 
 // TODO: function to shufle cards
 function shufle() {
@@ -76,19 +76,20 @@ function shufle() {
     const newCard = document.createElement('li');
     const newCardBack = document.createElement('div');
     const newCardFront = document.createElement('div');
-
-    newCard.className = 'card';
-    newCardBack.className = 'card-back';
-    newCardFront.className = 'card-front';
+    const newCardItem = document.createElement('i');
 
     // get random card number from array
     let cardPicked = Math.floor(Math.random() * cardDeck.length);
 
-    // assign picked card to newly created element
-    newCardFront.innerText = cardDeck[cardPicked];
+    newCard.className = 'card';
+    newCardBack.className = 'card-back';
+    newCardFront.className = 'card-front';
+    newCardItem.className = cardDeck[cardPicked];
+
     // remove picked card from available list
     cardDeck.splice(cardPicked, 1);
 
+    newCardFront.appendChild(newCardItem);
     newCard.appendChild(newCardBack);
     newCard.appendChild(newCardFront);
     fragment.appendChild(newCard);
@@ -116,7 +117,7 @@ board.addEventListener('click', function clickedCard(e) {
     } else if (!card2){
       card2 = e.target;
       card2.classList.toggle('selectedCard');
-      if (card1.textContent === card2.textContent) {
+      if (card1.innerHTML === card2.innerHTML) {
         --pairsLeft;
         card1 = undefined;
         card2 = undefined;
