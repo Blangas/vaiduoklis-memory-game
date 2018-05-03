@@ -26,6 +26,7 @@ movesTotalCounter.textContent = movesTotal; // moves total updated in page
 
 let time = 'Time: 00.00';
 let timeStart, timeExact, timeRefresh;
+let timeStopped = true;
 const timeCounter = document.querySelector('.timer');
 
 function timeCounting() {
@@ -74,12 +75,11 @@ const cardDeck16 = [
 // TODO: function to shufle cards
 function shufle() {
   // resets variables
-  timeRefresh = setInterval(timeCounting, 500); // set time intervals for refreshing timer
+  timeCounter.textContent = `Time: 00:00`; // shows timer at 00 before startingpick cards
   let cardDeck = cardDeck16.slice(); // create clone deck from which take out cards
   movesLeft = movesTotal; // reset mistake moves left to player
   movesLeftCounter.textContent = movesLeft; // update mistake moves left in page
   pairsLeft = cardDeck.length / 2; // reset card pairs left till win
-  timeStart = Date.now(); // reset time start point to count game time
   star1.textContent = '★'; // reset star rating displayed
   star2.textContent = '★';
   star3.textContent = '★';
@@ -124,6 +124,11 @@ let card1, card2;
 // TODO: what happens when card clicked
 board.addEventListener('click', function clickedCard(e) {
   if (e.target.nodeName === 'LI' && !e.target.classList.contains('selectedCard')) {
+    if (timeStopped) { // If timer not refreshing start it
+      timeStart = Date.now(); // reset time start point to count game time
+      timeRefresh = setInterval(timeCounting, 500); // set time intervals for refreshing timer
+      timeStopped = false;
+    }
 
     // first & second card reacts
     if (!card1) { // if first card not selected
@@ -140,6 +145,7 @@ board.addEventListener('click', function clickedCard(e) {
         if (pairsLeft <= 0) {
           timeCounting(); // recount time
           clearInterval(timeRefresh); // stop time counter
+          timeStopped = true;
           timeRating.textContent = timeExact; // exact time for win modal
           starRating.textContent = `${star1.textContent}${star2.textContent}${star3.textContent} ${movesLeft}/${movesTotal}`; // star/moves rating for win modal
           modalWin.style.display = 'block'; // display win modal
@@ -152,18 +158,17 @@ board.addEventListener('click', function clickedCard(e) {
           card1 = undefined;
           card2 = undefined;
         },600);
-        --movesLeft // removes the move
+        --movesLeft; // removes the move
         movesLeftCounter.textContent = movesLeft; // counts star rating
         if (movesLeft === movesTotal / 4 * 3) { // at 3/4 ★★☆
           star3.textContent = `☆`;
         } else if (movesLeft === movesTotal / 2) { // at 2/4 ★☆☆
           star2.textContent = `☆`;
-        } else if (movesLeft === movesTotal / 4) { // at 1/4 ☆☆☆
-          star1.textContent = `☆`;
         }
         // Lose condition
         if (movesLeft <= 0) {
           clearInterval(timeRefresh); // stop time counter
+          timeStopped = true;
           modalLose.style.display = 'block'; // display lose modal
           console.log('Lose...'); // test purpose
         }
@@ -175,10 +180,10 @@ board.addEventListener('click', function clickedCard(e) {
 // reshufle in which case close modals as well
 cls.onclick = function() {
   shufle();
-}
+};
 
 window.onclick = function(e) {
   if (e.target == modalWin) {
     shufle();
   }
-}
+};
